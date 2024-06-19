@@ -9,10 +9,7 @@ public class comidaSwitch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i <= comida.Length; i++)
-        {
-            comida[i].SetActive(false);
-        }
+        deactivateAll();
 
 
     }
@@ -22,19 +19,33 @@ public class comidaSwitch : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.RightArrow))
         {
-            currentIndex++;
-            if(currentIndex<comida.Length)
+            if(currentIndex<comida.Length-1)
             {
-                deactivateByIndex();
+                currentIndex++;
+                deactivateAll();
+                activateByIndex();
+            }
+            else
+            {
+                currentIndex = 0;
+                deactivateAll();
                 activateByIndex();
             }
         }
-        else if(Input.GetKeyDown(KeyCode.LeftArrow))
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            currentIndex--;
-            if(currentIndex>-1)
+            
+            if(currentIndex>0)
             {
-                deactivateByIndex();
+                currentIndex--;
+                deactivateAll();
+                activateByIndex();
+            }
+            else
+            {
+                currentIndex = 19;
+                deactivateAll();
                 activateByIndex();
             }
         }
@@ -45,6 +56,15 @@ public class comidaSwitch : MonoBehaviour
     }
     void activateByIndex()
     {
-        comida[currentIndex+1].SetActive(true);
+        comida[currentIndex].SetActive(true);
     }
+
+    void deactivateAll()
+    {
+        for (int i = 0; i <= comida.Length-1; i++)
+        {
+            comida[i].SetActive(false);
+        }
+    }
+
 }
